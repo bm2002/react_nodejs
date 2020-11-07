@@ -1,0 +1,4 @@
+{
+    "port": 3002,
+    "connectDB" : "mongodb+srv://bm2002:10951547@cluster0.rzsah.mongodb.net/api_nodeJS?retryWrites=true&w=majority"
+}
