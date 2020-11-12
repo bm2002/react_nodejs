@@ -1,15 +1,125 @@
-.App {
+*{ padding: 0; margin: 0;}
+
+
+
+.wrapper{
+  display: grid;
+  grid-template-rows: 150px 1fr 100px;
+  grid-template-columns: 150px 1fr;
+  grid-template-areas: 
+    "logo header"
+    "leftmenu content"
+    "footer footer";
+  grid-gap: 5px;
+}
+
+
+.logo{
+  background-color: white;
+  grid-area: logo;
+  
+}
+
+.wrapper div{
+  padding: 1em;
+}
+
+.wrapper .logo{
+  padding: 0;
+  margin:auto;
+}
+
+
+.header{
+  background-color: lightcyan;
+  grid-area: header;
+}
+
+.leftmenu{
+  background-color: burlywood;
+  grid-area: leftmenu;
+}
+
+.content{
+  background-color:lemonchiffon;
+  grid-area: content;
+}
+
+.footer{
+  background-color: lightgreen;
+  grid-area: footer;
+}
+
+.helper {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.App-logo {
+  height: 110px;
+  vertical-align: middle;
+}
+
+/* .logo{
+  padding: 0 !important;
+} */
+
+@media only screen and (max-width: 480px) {
+  .wrapper{
+    display: grid;
+    grid-template-rows: 80px 1fr 0px 50px;
+    grid-template-columns: 80px 1fr;
+    grid-template-areas: 
+      "logo header"
+      "content content"
+      "leftmenu leftmenu"
+      "footer footer";
+    grid-gap: 5px;
+  }
+
+  .leftmenu{
+    background-color: white;  
+  }
+
+  .App-logo {
+    /* background-color: tomato; */
+    height: 70px;
+    /* padding: 0px; */
+    vertical-align: middle;
+    /* padding: 4px; */
+    
+  }
+}
+
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 5s linear;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* .App {
   text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 20vmin;
   pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+    animation: App-logo-spin infinite 5s linear;
   }
 }
 
@@ -35,4 +145,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
