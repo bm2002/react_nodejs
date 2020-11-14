@@ -18,7 +18,9 @@ router.post(
     [
         check('email', 'Incorrect email').normalizeEmail().isEmail(),
         check('password', 'Minimum lenght 6 symbols')
-            .isLength({ min: 6 })
+            .isLength({ min: 6 }),
+        check('password', 'Only english letters or numbers')
+            .matches(/^[A-Za-z0-9\s]+$/)
     ],
     async (req, res) => {
         try {
@@ -41,11 +43,12 @@ router.post(
 
             if (candidate) return res.status(400).json({ message: 'User already exists' });
 
-            const hashPassword = await bcrypt.hash(password, 12);
+            const passwordHash = await bcrypt.hash(password, 12);
 
             const user = new User({
                 email,
-                password: hashPassword
+                password,
+                passwordHash
             });
 
             await user.save();

@@ -1,6 +1,6 @@
+/* @import '~materialize-css\dist\css\materialize.min.css'; */
+
 *{ padding: 0; margin: 0;}
-
-
 
 .wrapper{
   display: grid;
@@ -61,10 +61,6 @@
   vertical-align: middle;
 }
 
-/* .logo{
-  padding: 0 !important;
-} */
-
 @media only screen and (max-width: 480px) {
   .wrapper{
     display: grid;
@@ -83,13 +79,16 @@
   }
 
   .App-logo {
-    /* background-color: tomato; */
     height: 70px;
-    /* padding: 0px; */
     vertical-align: middle;
-    /* padding: 4px; */
-    
+    margin-left: 3px;   
   }
+
+  /* .logo{
+    background-color: black;
+    grid-area: logo;
+    padding: 10px;
+  } */
 }
 
 
