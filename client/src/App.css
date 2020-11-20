@@ -41,13 +41,17 @@
 }
 
 .content{
-  background-color:lemonchiffon;
+  /* background-color:lemonchiffon; */
   grid-area: content;
+  min-height: calc(100vh - 260px);
 }
 
 .footer{
   background-color: lightgreen;
   grid-area: footer;
+  /* position: fixed;
+  width: 100%;
+  bottom: 0; */
 }
 
 .helper {
@@ -61,7 +65,7 @@
   vertical-align: middle;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 900px) {
   .wrapper{
     display: grid;
     grid-template-rows: 80px 1fr 0px 50px;
@@ -84,11 +88,16 @@
     margin-left: 3px;   
   }
 
-  /* .logo{
-    background-color: black;
-    grid-area: logo;
-    padding: 10px;
+  /* .content{
+    grid-area: content;
+    min-height: calc(100vh - 140px);
   } */
+
+  .footer{
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+  }
 }
 
 
