@@ -79,7 +79,10 @@ router.post(
     '/login',
     [
         check('email', 'Incorrect email').normalizeEmail().isEmail(),
-        check('password', 'Empty password').exists()
+        check('email', 'Empty email').exists(),
+        check('password', 'Empty password').exists(),
+        check('password', 'Only english letters or numbers')
+            .matches(/^[A-Za-z0-9\s]+$/)
     ],
     async (req, res) => {
         try {
@@ -89,7 +92,8 @@ router.post(
                 return res.status(400).json(
                     {
                         errors: errors.array(),
-                        message: 'Invalid registration data'
+                        message: 'Invalid login data',
+                        status: false
                     });
             }
 
@@ -99,11 +103,11 @@ router.post(
 
             let IsMatch = false;
             if (user) {
-                IsMatch = await bcrypt.compare(password, user.password);
+                IsMatch = await bcrypt.compare(password, user.passwordHash);
             }
 
             if (!IsMatch) {
-                return res.status(400).json({ message: 'User not found or incorrect password' });
+                return res.status(400).json({ message: 'Incorrect email or password', status: false, errors: errors.array() });
             }
 
             const token = jwt.sign(
@@ -112,10 +116,59 @@ router.post(
                 { 'expiresIn': '1h' }
             );
 
-            return res.status(200).json({ token, userId: user._id });
+            return res.status(200).json({ token, userId: user._id, status: true, errors: errors.array() });
 
         } catch (e) {
-            res.status(500).json({ message: e.message });
+            res.status(500).json({ message: e.message, status: false, errors: errors.array() });
+        }
+    });
+
+//api/auth/user/id
+router.get(
+    '/user',
+    [
+        check('email', 'Incorrect email').normalizeEmail().isEmail(),
+        check('email', 'Empty email').exists(),
+        check('password', 'Empty password').exists(),
+        check('password', 'Only english letters or numbers')
+            .matches(/^[A-Za-z0-9\s]+$/)
+    ],
+    async (req, res) => {
+        try {
+            const errors = validationResult(req)
+
+            if (!errors.isEmpty()) {
+                return res.status(400).json(
+                    {
+                        errors: errors.array(),
+                        message: 'Invalid login data',
+                        status: false
+                    });
+            }
+
+            const { email, password } = req.body;
+
+            const user = await User.findOne({ email });
+
+            let IsMatch = false;
+            if (user) {
+                IsMatch = await bcrypt.compare(password, user.passwordHash);
+            }
+
+            if (!IsMatch) {
+                return res.status(400).json({ message: 'Incorrect email or password', status: false, errors: errors.array() });
+            }
+
+            const token = jwt.sign(
+                { userId: user._id },
+                config.get('secret'),
+                { 'expiresIn': '1h' }
+            );
+
+            return res.status(200).json({ token, userId: user._id, status: true, errors: errors.array() });
+
+        } catch (e) {
+            res.status(500).json({ message: e.message, status: false, errors: errors.array() });
         }
     });
 

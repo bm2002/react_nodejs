@@ -15,5 +15,15 @@ export const authAPI = {
                 // debugger
                 return error.response.data
             });
+    },
+    login(formData) {
+        return axiosInstance.post(`auth/login`, formData)
+            .then(response => {
+                return response.data
+            })
+            .catch(error => {
+                // debugger
+                return error.response.data
+            });
     }
 }
