@@ -7,9 +7,23 @@ const { check, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user')
+const Profile = require('../models/profile')
 
 router.get('/test', async (req, res) => {
     await res.send('test');
+});
+
+//api/auth/user/id
+router.get('/user/:id', (req, res) => {
+
+    User.
+        findOne({ _id: req.params.id }).
+        populate('profile').
+        exec(function (err, user) {
+            if (err) return handleError(err);
+            res.send(user)
+        });
+
 });
 
 router.post(
@@ -47,7 +61,7 @@ router.post(
                 return res.status(400).json(
                     {
                         errors: errors.array(),
-                        message: 'Invalid registration data', 
+                        message: 'Invalid registration data',
                         status: false
                     });
             }
@@ -58,10 +72,21 @@ router.post(
 
             const passwordHash = await bcrypt.hash(password, 12);
 
+            const profile = new Profile(
+                {
+                    _id: new Types.ObjectId(),
+                    awards: 151
+                }
+            )
+
+            await profile.save();
+
             const user = new User({
+                _id: new Types.ObjectId(),
                 email,
                 password,
-                passwordHash
+                passwordHash,
+                profile: profile._id
             });
 
             await user.save();

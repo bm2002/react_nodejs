@@ -20,9 +20,6 @@
   
 }
 
-.wrapper div{
-  padding: 1em;
-}
 
 .wrapper .logo{
   padding: 0;
@@ -44,6 +41,7 @@
   /* background-color:lemonchiffon; */
   grid-area: content;
   min-height: calc(100vh - 260px);
+  padding: 1em;
 }
 
 .footer{

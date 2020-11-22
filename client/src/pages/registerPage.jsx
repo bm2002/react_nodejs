@@ -5,9 +5,13 @@ import { reduxForm, Field } from 'redux-form'
 import { Register } from '../redux/authReducer';
 import { renderInput } from '../common/renders'
 import ReCAPTCHA from 'react-google-recaptcha'
-import jwt from "jsonwebtoken";
+import Error from '../components/error';
+// import jwt from "jsonwebtoken";
+
 
 const RegisterPage = ({ handleSubmit, reset, errors, Register }) => {
+
+    // debugger
 
     const submit = formData => {
         // localStorage.setItem('email', formData.email)
@@ -32,6 +36,7 @@ const RegisterPage = ({ handleSubmit, reset, errors, Register }) => {
     // const { loading, request, error, clearError } = useHttp()
 
     useEffect(() => {
+        // debugger
         if (!errors) return;
         // reset();
         let timerFunc = setTimeout(() => {
@@ -106,7 +111,10 @@ const RegisterPage = ({ handleSubmit, reset, errors, Register }) => {
                     type='password'
                 />
             </div>
-            <div id="recaptchaContainer" style={{ marginLeft: '-33px', marginBottom: '-50px', marginTop: '-50px', transform: 'scale(0.7)', transformOrigin: '0 0', display: 'flex', justifyContent: 'left' }}>
+            <div 
+                // id="recaptchaContainer"
+                // style={{ marginLeft: '-33px', marginBottom: '-50px', marginTop: '-50px', transform: 'scale(0.7)', transformOrigin: '0 0', display: 'flex', justifyContent: 'left' }}
+            >
                 <ReCAPTCHA
                     name="recaptcha"
                     sitekey="6Lcz1dwZAAAAAMukUlBQzd1GE1JNJuhA-QZP8QcC"
@@ -118,9 +126,9 @@ const RegisterPage = ({ handleSubmit, reset, errors, Register }) => {
                 />
             </div>
 
-            {(errorArray.length !== 0) ? errorArray.map((e, index) => <div key={index} className='alert alert-danger'>{e}</div>) : null}
+            {(errorArray.length !== 0) ? errorArray.map((e, index) => <Error key={index} errorText={e} />) : null}
 
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '5px' }}>
                 <button
                     style={{ width: '250px' }}
                     className="btn btn-lg btn-primary btn-block"

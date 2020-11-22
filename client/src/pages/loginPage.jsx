@@ -5,6 +5,8 @@ import { reduxForm, Field } from 'redux-form'
 import { Login } from '../redux/authReducer';
 import { renderInput } from '../common/renders'
 import ReCAPTCHA from 'react-google-recaptcha'
+import { NavLink } from 'react-router-dom';
+import Error from '../components/error';
 // import { useHttp } from '../hooks/http'
 
 const LoginPage = ({ handleSubmit, reset, errors, Login }) => {
@@ -29,7 +31,7 @@ const LoginPage = ({ handleSubmit, reset, errors, Login }) => {
 
     }, [errors, Login, reset]);
 
-    
+
     if (!!errors && errors.status) return <div>Вы успешно залогинились!</div>
 
     const errorArray = []
@@ -63,7 +65,11 @@ const LoginPage = ({ handleSubmit, reset, errors, Login }) => {
                 />
                 <label htmlFor="inputConfirmPassword" className="sr-only">Password</label>
             </div>
-            <div id="recaptchaContainer" style={{ marginLeft: '-33px', marginBottom: '-50px', marginTop: '-50px', transform: 'scale(0.7)', transformOrigin: '0 0', display: 'flex', justifyContent: 'left' }}>
+            <div
+            // id="recaptchaContainer"
+            // style={{ marginLeft: '-33px', marginBottom: '-50px', marginTop: '-50px', transform: 'scale(0.7)', transformOrigin: '0 0', display: 'flex', justifyContent: 'left' }}
+            // style={{ transform: 'scale(0.7)', transformOrigin: '0 0', backgroundColor: 'red'}}
+            >
                 <ReCAPTCHA
                     name="recaptcha"
                     sitekey="6Lcz1dwZAAAAAMukUlBQzd1GE1JNJuhA-QZP8QcC"
@@ -75,16 +81,20 @@ const LoginPage = ({ handleSubmit, reset, errors, Login }) => {
                 />
             </div>
 
-            {(errorArray.length !== 0) ? errorArray.map((e, index) => <div key={index} className='alert alert-danger'>{e}</div>) : null}
+            <div style={{textDecoration: 'underline'}}>
+                <NavLink to='./register'>
+                    Регистрация
+                </NavLink>
+            </div>
 
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
+            {(errorArray.length !== 0) ? errorArray.map((e, index) => <Error key={index} errorText={e} />) : null}
+
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '5px' }}>
                 <button
                     style={{ width: '250px' }}
                     className="btn btn-lg btn-primary btn-block"
                     type="submit"
                     disabled={!recaptcha || errors}
-                // onClick={dispatch(reset('registerform'))}
-                // style={{ width: '250px' }}
                 >LogIn
             </button>
             </div>

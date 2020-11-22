@@ -1,10 +1,7 @@
 const {Schema, model, Types} = require('mongoose');
 
 const userScheme = Schema({
-    id : {
-        type: Types.ObjectId
-        // ref: 'Link' 
-    },
+    _id: Types.ObjectId,
     email: {
         type: String,
         required: true, 
@@ -22,6 +19,10 @@ const userScheme = Schema({
         type: Boolean,
         required: true,
         default: false 
+    },
+    profile :{
+        type: Types.ObjectId,
+        ref: 'Profile'
     }
 }, { versionKey: false });
 

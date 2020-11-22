@@ -49,7 +49,7 @@ let authReducer = (state = initialState, action) => {
             return { ...state, errors: action.response }
         }
         case 'LOGIN': {
-            debugger
+            // debugger
             return {
                 ...state,
                 isAuth: !action.response ? null : action.response.status,
