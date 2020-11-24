@@ -75,7 +75,7 @@ router.post(
             const profile = new Profile(
                 {
                     _id: new Types.ObjectId(),
-                    awards: 151
+                    // awards: 151
                 }
             )
 

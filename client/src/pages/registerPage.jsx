@@ -9,31 +9,15 @@ import Error from '../components/error';
 // import jwt from "jsonwebtoken";
 
 
-const RegisterPage = ({ handleSubmit, reset, errors, Register }) => {
+const RegisterPage = ({ handleSubmit, reset, errors, Register, message }) => {
 
     // debugger
 
     const submit = formData => {
-        // localStorage.setItem('email', formData.email)
-        // debugger
-        // localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZmI3ZTJlOTVjMGE4OTY4NzA1Y2E2ZTQiLCJpYXQiOjE2MDU5Nzk3ODAsImV4cCI6MTYwNTk3OTg0MH0.2Kb7LNMkVrD2I--GeyQA7AkouWSwwExS8SLldfk-A4M')
-        // localStorage.removeItem('token1')
-        // debugger
-        // console.log(localStorage.token)
-        // const decoded = jwt.decode(localStorage.token);
-        // console.log(Number(decoded.Date))
-        // console.log((new Date(Number(jwt.Date))).getHours())
-        // console.log((new Date(1469433907836)).getHours())
-        // console.log(new Date().getHours())
-        // console.log(Date.now() - decoded.exp * 1000);
-        // console.log(Date.now() < decoded.exp * 1000);
-        // debugger
         Register(formData);
-        // registerHandler(formData);
     }
 
     let [recaptcha, setRecaptcha] = useState(null);
-    // const { loading, request, error, clearError } = useHttp()
 
     useEffect(() => {
         // debugger
@@ -48,26 +32,13 @@ const RegisterPage = ({ handleSubmit, reset, errors, Register }) => {
 
     }, [errors, Register, reset]);
 
-    // const registerHandler = async (formData) => {
-    //     try {
-    //         debugger
-    //         try {
-    //             // const data = await request('http://localhost:3002/api/auth/register', 'POST', formData)
-    //             const data = await request('http://localhost:3002/api/auth/test', 'GET')
-    //             debugger
-    //         } catch (e){
-    //             console.log(e.message)
-    //         }
-    //         // message(data.message)
-    //     } catch (e) { console.log(e.message) }
-    // }
-    // debugger
-    if (!!errors && errors.status) return <div>Регистрация прошла успешно!</div>
+
+    if (!!errors) return <div>Регистрация прошла успешно!</div>
 
     const errorArray = []
     if (errors) {
-        errorArray.push(errors.message)
-        errors.errors.map((e) => errorArray.push(`"${e.param}" - ${e.msg}`))
+        if (message) errorArray.push(message)
+        errors.map((e) => errorArray.push(`"${e.param}" - ${e.msg}`))
         // debugger
     }
 
@@ -147,7 +118,8 @@ const RegisterPage = ({ handleSubmit, reset, errors, Register }) => {
 
 let mapStateToProps = (state) => {
     return {
-        errors: state.auth.errors
+        errors: state.auth.errors,
+        message: state.auth.message
     }
 }
 

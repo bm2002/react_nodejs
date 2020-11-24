@@ -5,8 +5,16 @@ import RegisterPage from './pages/registerPage';
 // import { Provider } from 'react-redux';
 import { Route, HashRouter, Switch } from 'react-router-dom'
 import LoginPage from './pages/loginPage'
+import Profile from './pages/profilePage';
+import Header from './components/header';
+import { useWindowDimensions } from '../src/hooks/windows.width'
+
 
 const App = () => {
+
+  const { width } = useWindowDimensions()
+  // console.log(width)
+
   return (
     <HashRouter>
       <div className='wrapper'>
@@ -14,8 +22,8 @@ const App = () => {
           <span className="helper"></span>
           <img src={logo} className="App-logo" alt="logo" />
         </div>
-        <div className="header">HEADER</div>
-        {window.innerWidth >= 900 ? <div className="leftmenu">MENU</div> : null}
+        <Header />
+        {width >= 900 ? <div className="leftmenu">MENU</div> : null}
         <div className="content">
           <Switch>
             <Route path='/register' render={() =>
@@ -23,6 +31,9 @@ const App = () => {
             />
             <Route path='/login' render={() =>
               <LoginPage />}
+            />
+            <Route path='/profile' render={() =>
+              <Profile />}
             />
             <Route path='*' render={() => <div>404 not found</div>} />
             {/* <RegisterPage /> */}

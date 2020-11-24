@@ -7,11 +7,17 @@ import { renderInput } from '../common/renders'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { NavLink } from 'react-router-dom';
 import Error from '../components/error';
-// import { useHttp } from '../hooks/http'
+import { Redirect } from 'react-router-dom'
 
-const LoginPage = ({ handleSubmit, reset, errors, Login }) => {
+
+const LoginPage = ({ handleSubmit, reset, errors, message, Login, isAuth }) => {
+    // debugger
+    // if (isAuth) {
+    //     return <Redirect to='/profile' />
+    // }
 
     const submit = formData => {
+        // debugger
         Login(formData);
         // registerHandler(formData);
     }
@@ -32,87 +38,94 @@ const LoginPage = ({ handleSubmit, reset, errors, Login }) => {
     }, [errors, Login, reset]);
 
 
-    if (!!errors && errors.status) return <div>Вы успешно залогинились!</div>
+    // if (!!errors && isAuth) return <Redirect to='/profile' />
 
     const errorArray = []
     if (errors) {
-        errorArray.push(errors.message)
-        errors.errors.map((e) => errorArray.push(`"${e.param}" - ${e.msg}`))
+        if (message) errorArray.push(message)
+        errors.map((e) => errorArray.push(`"${e.param}" - ${e.msg}`))
         // debugger
     }
 
-    return (<div>
-        {/* <form className="form-signin" onSubmit={handleSubmit}> */}
-        <form className="form-signin" onSubmit={handleSubmit(formData => submit(formData))}>
-            <h1 className="h3 mb-3 font-weight-normal">Please login</h1>
+    // debugger
+    return <>
+        {isAuth
+            ? <Redirect to='/profile' />
+            :
             <div>
-                <label htmlFor="inputEmail" className="sr-only">Email address</label>
-                <Field
-                    component={renderInput}
-                    name="email"
-                    placeholder="Email address"
-                    autoFocus={true}
-                    type='text'
-                />
+                <form className="form-signin" onSubmit={handleSubmit(formData => submit(formData))}>
+                    <h1 className="h3 mb-3 font-weight-normal">Please login</h1>
+                    <div>
+                        <label htmlFor="inputEmail" className="sr-only">Email address</label>
+                        <Field
+                            component={renderInput}
+                            name="email"
+                            placeholder="Email address"
+                            autoFocus={true}
+                            type='text'
+                        />
 
-                <label htmlFor="inputPassword" className="sr-only">Password</label>
-                <Field
-                    component={renderInput}
-                    name="password"
-                    placeholder="Password"
-                    autoFocus={false}
-                    type='password'
-                />
-                <label htmlFor="inputConfirmPassword" className="sr-only">Password</label>
-            </div>
-            <div
-            // id="recaptchaContainer"
-            // style={{ marginLeft: '-33px', marginBottom: '-50px', marginTop: '-50px', transform: 'scale(0.7)', transformOrigin: '0 0', display: 'flex', justifyContent: 'left' }}
-            // style={{ transform: 'scale(0.7)', transformOrigin: '0 0', backgroundColor: 'red'}}
-            >
-                <ReCAPTCHA
-                    name="recaptcha"
-                    sitekey="6Lcz1dwZAAAAAMukUlBQzd1GE1JNJuhA-QZP8QcC"
-                    // theme="dark"
-                    size='normal'
-                    onChange={(value) => {
-                        setRecaptcha(value)
-                    }}
-                />
-            </div>
+                        <label htmlFor="inputPassword" className="sr-only">Password</label>
+                        <Field
+                            component={renderInput}
+                            name="password"
+                            placeholder="Password"
+                            autoFocus={false}
+                            type='password'
+                        />
+                        <label htmlFor="inputConfirmPassword" className="sr-only">Password</label>
+                    </div>
+                    <div
+                    // id="recaptchaContainer"
+                    // style={{ marginLeft: '-33px', marginBottom: '-50px', marginTop: '-50px', transform: 'scale(0.7)', transformOrigin: '0 0', display: 'flex', justifyContent: 'left' }}
+                    // style={{ transform: 'scale(0.7)', transformOrigin: '0 0', backgroundColor: 'red'}}
+                    >
+                        <ReCAPTCHA
+                            name="recaptcha"
+                            sitekey="6Lcz1dwZAAAAAMukUlBQzd1GE1JNJuhA-QZP8QcC"
+                            // theme="dark"
+                            size='normal'
+                            onChange={(value) => {
+                                setRecaptcha(value)
+                            }}
+                        />
+                    </div>
 
-            <div style={{textDecoration: 'underline'}}>
-                <NavLink to='./register'>
-                    Регистрация
+                    <div style={{ textDecoration: 'underline' }}>
+                        <NavLink to='./register'>
+                            Регистрация
                 </NavLink>
-            </div>
+                    </div>
 
-            {(errorArray.length !== 0) ? errorArray.map((e, index) => <Error key={index} errorText={e} />) : null}
+                    {(errorArray.length !== 0) ? errorArray.map((e, index) => <Error key={index} errorText={e} />) : null}
 
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '5px' }}>
-                <button
-                    style={{ width: '250px' }}
-                    className="btn btn-lg btn-primary btn-block"
-                    type="submit"
-                    disabled={!recaptcha || errors}
-                >LogIn
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '5px' }}>
+                        <button
+                            style={{ width: '250px' }}
+                            className="btn btn-lg btn-primary btn-block"
+                            type="submit"
+                            disabled={!recaptcha || errors}
+                        >LogIn
             </button>
+                    </div>
+                </form>
             </div>
-        </form>
-    </div>
-    )
+        }
+    </>
 }
 
 
 let mapStateToProps = (state) => {
     return {
-        errors: state.auth.errors
+        errors: state.auth.errors,
+        message: state.auth.message,
+        isAuth: state.auth.isAuth
     }
 }
 
 
 export default reduxForm({
-    form: 'registerform'
+    form: 'loginform'
 })
     (
         compose
