@@ -1,16 +1,20 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React, {useContext} from 'react'
+// import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import {changeLanguageAC} from '../redux/appReducer'
+import { LanguageContext } from '../../src/context/language'
 
-const LanguageSwitcher = ({language, changeLanguageAC}) => {
+const LanguageSwitcher = () => {
 
+    const state = useContext(LanguageContext)
+    // debugger
     const languges = ['Ru', 'En']
+    const language = state.language
 
     const changeLanguage = (e) =>{
         e.preventDefault()
-        localStorage.setItem('language', e.target.text.trim())
-        changeLanguageAC(e.target.text.trim())
+        // localStorage.setItem('language', e.target.text.trim())
+        state.setLanguage(e.target.text.trim())
+        // changeLanguageAC(e.target.text.trim())
     }
 
     return (
@@ -25,7 +29,7 @@ const LanguageSwitcher = ({language, changeLanguageAC}) => {
                             key={index}
                             style={{ textDecoration: 'underline' }}
                             to='/'
-                            role='button'
+                            // role='button'
                             onClick={(e) => { changeLanguage(e) }}
                         >
                             {l}&nbsp;
@@ -33,18 +37,18 @@ const LanguageSwitcher = ({language, changeLanguageAC}) => {
                     }
                 })
             }
-            {/* {languges.map(l, index) => {l}} */}
-            {/* <span>Ru</span> */}
         </>
     )
 }
 
+export default LanguageSwitcher
+
 //language: state.app.language
 
-const mapStateToProps = (state) =>{
-    return{
-        language: state.app.language
-    }
-}
+// const mapStateToProps = (state) =>{
+//     return{
+//         language: state.app.language
+//     }
+// }
 
-export default connect(mapStateToProps, {changeLanguageAC})(LanguageSwitcher)
+// export default connect(mapStateToProps, {changeLanguageAC})(LanguageSwitcher)

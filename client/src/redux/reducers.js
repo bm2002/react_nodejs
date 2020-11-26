@@ -1,7 +1,7 @@
 import { applyMiddleware, compose, createStore, combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
 import authReducer from './authReducer'
-import appReducer from './appReducer'
+// import appReducer from './appReducer'
 import thunkMiddleware from 'redux-thunk'
 
 const rootReducer = combineReducers({
@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
   // for custom keys look up the docs for 'getFormState'
   form: formReducer,
   auth: authReducer,
-  app: appReducer
+  // app: appReducer
 })
 
 // const store = createStore(rootReducer)

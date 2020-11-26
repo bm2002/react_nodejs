@@ -1,17 +1,19 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { connect } from 'react-redux'
+import { LanguageContext } from '../../src/context/language'
 
-const Profile = ({ language }) => {
+const Profile = () => {
+    const state = useContext(LanguageContext)
     return (
         <div>
-            {language === 'Ru' ? 'Профиль' : 'Profile'}
+            {state.language === 'Ru' ? 'Профиль' : 'Profile'}
         </div>
     )
 }
 
 const mapStateToProps = (state) => {
     return {
-        language: state.app.language
+        // language: state.app.language
     }
 }
 

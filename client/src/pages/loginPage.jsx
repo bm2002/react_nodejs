@@ -11,10 +11,6 @@ import { Redirect } from 'react-router-dom'
 
 
 const LoginPage = ({ handleSubmit, reset, errors, message, Login, isAuth }) => {
-    // debugger
-    // if (isAuth) {
-    //     return <Redirect to='/profile' />
-    // }
 
     const submit = formData => {
         // debugger
@@ -53,7 +49,7 @@ const LoginPage = ({ handleSubmit, reset, errors, message, Login, isAuth }) => {
             ? <Redirect to='/profile' />
             :
             <div>
-                <form className="form-signin" onSubmit={handleSubmit(formData => submit(formData))}>
+                <form style={{ width: '350px' }} className="form-signin" onSubmit={handleSubmit(formData => submit(formData))}>
                     <h1 className="h3 mb-3 font-weight-normal">Please login</h1>
                     <div>
                         <label htmlFor="inputEmail" className="sr-only">Email address</label>
@@ -76,9 +72,6 @@ const LoginPage = ({ handleSubmit, reset, errors, message, Login, isAuth }) => {
                         <label htmlFor="inputConfirmPassword" className="sr-only">Password</label>
                     </div>
                     <div
-                    // id="recaptchaContainer"
-                    // style={{ marginLeft: '-33px', marginBottom: '-50px', marginTop: '-50px', transform: 'scale(0.7)', transformOrigin: '0 0', display: 'flex', justifyContent: 'left' }}
-                    // style={{ transform: 'scale(0.7)', transformOrigin: '0 0', backgroundColor: 'red'}}
                     >
                         <ReCAPTCHA
                             name="recaptcha"
@@ -100,13 +93,14 @@ const LoginPage = ({ handleSubmit, reset, errors, message, Login, isAuth }) => {
                     {(errorArray.length !== 0) ? errorArray.map((e, index) => <Error key={index} errorText={e} />) : null}
 
                     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '5px' }}>
+                        {/* <div> */}
                         <button
-                            style={{ width: '250px' }}
+                            style={{ width: '150px' }}
                             className="btn btn-lg btn-primary btn-block"
                             type="submit"
                             disabled={!recaptcha || errors}
                         >LogIn
-            </button>
+                        </button>
                     </div>
                 </form>
             </div>

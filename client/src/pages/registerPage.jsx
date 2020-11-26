@@ -53,7 +53,7 @@ const RegisterPage = ({ handleSubmit, reset, errors, Register, message }) => {
 
     return (<div>
         {/* <form className="form-signin" onSubmit={handleSubmit}> */}
-        <form className="form-signin" onSubmit={handleSubmit(formData => submit(formData))}>
+        <form  style={{  width: '350px'}}  className="form-signin" onSubmit={handleSubmit(formData => submit(formData))}>
             <h1 className="h3 mb-3 font-weight-normal">Please register</h1>
             <div>
                 <label htmlFor="inputEmail" className="sr-only">Email address</label>
@@ -101,7 +101,7 @@ const RegisterPage = ({ handleSubmit, reset, errors, Register, message }) => {
 
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '5px' }}>
                 <button
-                    style={{ width: '250px' }}
+                    style={{ width: '150px' }}
                     className="btn btn-lg btn-primary btn-block"
                     type="submit"
                     disabled={!recaptcha || errors}

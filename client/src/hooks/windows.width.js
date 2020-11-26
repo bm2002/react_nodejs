@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState, useEffect} from 'react';
 
 
 export function useWindowDimensions() {
@@ -10,7 +10,7 @@ export function useWindowDimensions() {
     // setHeight(window.innerHeight);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener("resize", updateWidthAndHeight);
     return () => window.removeEventListener("resize", updateWidthAndHeight);
   });
